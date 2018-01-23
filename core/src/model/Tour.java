@@ -1,16 +1,17 @@
 package model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Tour {
 
     private String destination;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private TourType tourType;
     private int capacity;
+    private boolean isActive = true;
 
-    public Tour(String destination, LocalDateTime startDate, LocalDateTime endDate,
+    public Tour(String destination, LocalDate startDate, LocalDate endDate,
                 TourType tourType) {
         this.destination = destination;
         this.startDate = startDate;
@@ -19,13 +20,19 @@ public class Tour {
         this.capacity = 50;
     }
 
-    public Tour(String destination, LocalDateTime startDate, LocalDateTime endDate,
+    public Tour(String destination, LocalDate startDate, LocalDate endDate,
                 TourType tourType, int capacity) {
         this.destination = destination;
         this.startDate = startDate;
         this.endDate = endDate;
         this.tourType = tourType;
         this.capacity = capacity;
+    }
+
+    @Override
+    public String toString() {
+        return "Destination: " + destination + "; Start date: " + startDate.toString() + ", end date: " +
+                endDate + ". Tour: " + tourType.toString() + ", places available: " + capacity;
     }
 
     public String getDestination() {
@@ -36,19 +43,19 @@ public class Tour {
         this.destination = destination;
     }
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -66,5 +73,13 @@ public class Tour {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }
