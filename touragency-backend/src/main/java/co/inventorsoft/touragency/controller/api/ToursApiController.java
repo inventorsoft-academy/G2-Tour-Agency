@@ -17,6 +17,14 @@ import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
+/**
+ * Class {@code ToursApiController} provides a REST Tours API for the Tour Agency Application.
+ * Tours API may be used to retrieve and manipulate data relating primarily to {@link Tour} objects.
+ * This API does not provide functionality for tour booking and reviewing. These are offered by
+ * Booking API ({@link BookingApiController}) and Reviews API ({@link ReviewsApiController}
+ * respectively.
+ * All methods in this API can be accesed via ./tours/[method_name] URL.
+ * */
 @CrossOrigin(origins = "*", methods = {GET, POST, PUT, DELETE, OPTIONS})
 @RestController
 @RequestMapping(value = "/tours")
@@ -24,16 +32,32 @@ public class ToursApiController {
 
     private TourService tourService;
 
+    /**
+     * Autowired constructor that injects an instance of {@link TourService} service
+     * as a primary dependency for the API.
+     * */
     @Autowired
     public ToursApiController(TourService tourService) {
         this.tourService = tourService;
     }
 
+    /**
+     * {@code getTours()} method provides an interface to perform a GET request to obtain
+     * a list of tours. After processing of data offered by {@link TourService} service,
+     * this method would return a JSON response with mapped data corresponding to tours.
+     * @return Http status 200 if the operation succeeded
+     * */
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Tour>> getTours() {
         return ResponseEntity.ok(tourService.getTours(true));
     }
 
+    /**
+     * {@code getTourById(int id)} method allows access to data on an individual tour based on
+     * its identifier. The tour's id is passed as a path variable in the request's URL.
+     * The resulting data is returned in JSON format as in {@link #getTours()} method
+     * @return Http status 200 if the operation succeeded
+     * */
     @GetMapping(value = "{id:\\d+}")
     public ResponseEntity<Tour> getTourById(@PathVariable int id) {
         return ResponseEntity.ok(tourService.getTour(id));

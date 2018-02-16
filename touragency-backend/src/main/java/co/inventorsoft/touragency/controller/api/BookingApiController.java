@@ -110,4 +110,19 @@ public class BookingApiController {
             return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
         }
     }
+
+    /**
+     * {@code cancelBooking(int id)} method allows a user to cancel a booking he made.
+     * This method takes an integer value referring to booking identifier as a path variable
+     * for the PUT Http request.
+     * @param id an identifier of a booking that would be cancelled
+     *           @return Http status code OK if the operation was performed successfully or
+     *           Http status NOT_FOUND otherwise.
+     * */
+    @PutMapping("/cancel/{id:\\d+}")
+    public ResponseEntity cancelBooking(@PathVariable int id) {
+        return bookingService.cancelBooking(id) ?
+                new ResponseEntity(HttpStatus.OK) :
+                new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
 }
