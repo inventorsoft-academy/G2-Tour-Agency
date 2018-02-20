@@ -1,0 +1,65 @@
+<div class="container ">
+  <mat-card>
+    <mat-card-title><span>Registration</span></mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="registerForm">
+        <mat-form-field [ngClass]="{'error': registerForm.controls['username'].errors &&
+                        !registerForm.controls['username'].pristine}"
+                        dividerColor="{{registerForm.controls['username'].errors &&
+         !registerForm.controls['username'].pristine ? 'warn' : 'primary'}}">
+          <input matInput type="text" placeholder="Username" formControlName="username" required>
+          <div *ngIf="registerForm.controls['username'].errors && !registerForm.controls['username'].pristine"
+               class="error-msg">
+            <div [hidden]="!registerForm.controls['username'].errors.required">Username is required.</div>
+          </div>
+        </mat-form-field>
+        <br>
+        <mat-form-field [ngClass]="{'error': registerForm.controls['password'].errors &&
+                        !registerForm.controls['password'].pristine}"
+                        dividerColor="{{registerForm.controls['password'].errors &&
+         !registerForm.controls['password'].pristine ? 'warn' : 'primary'}}">
+          <input matInput type="password" placeholder="Password" formControlName="password" required>
+          <div *ngIf="registerForm.controls['username'].errors && !registerForm.controls['username'].pristine"
+               class="error-msg">
+            <div [hidden]="!registerForm.controls['username'].errors.required">Username is required.</div>
+          </div>
+        </mat-form-field>
+        <br>
+
+        <mat-form-field [ngClass]="{'error': registerForm.controls['email'].errors &&
+                        !registerForm.controls['email'].pristine}"
+                        dividerColor="{{registerForm.controls['email'].errors &&
+         !registerForm.controls['email'].pristine ? 'warn' : 'primary'}}">
+          <input matInput type="email" placeholder="Email" formControlName="email" required>
+          <div *ngIf="registerForm.controls['email'].errors && !registerForm.controls['email'].pristine"
+               class="error-msg">
+            <div [hidden]="!registerForm.controls['email'].errors.required">Email is required.</div>
+          </div>
+        </mat-form-field>
+        <br>
+
+        <!--<mat-form-field>
+          <mat-checkbox formControlName="isAdminCheckbox">Is administrator</mat-checkbox>
+        </mat-form-field>-->
+        <br>
+
+        <mat-form-field [ngClass]="{'error': registerForm.controls['agency'].errors &&
+                        !registerForm.controls['username'].pristine}"
+                        dividerColor="{{registerForm.controls['username'].errors &&
+         !registerForm.controls['username'].pristine ? 'warn' : 'primary'}}">
+          <input matInput type="text" placeholder="Username" formControlName="username" required>
+          <div *ngIf="registerForm.controls['username'].errors && !registerForm.controls['username'].pristine"
+               class="error-msg">
+            <div [hidden]="!registerForm.controls['username'].errors.required">Username is required.</div>
+          </div>
+        </mat-form-field>
+        <br>
+
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-flat-button [disabled]="registerForm.invalid" (click)="register()">REGISTER</button>
+    </mat-card-actions>
+
+  </mat-card>
+</div>

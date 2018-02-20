@@ -1,0 +1,52 @@
+<div class="example-container mat-elevation-z0">
+  <mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="destination">
+      <mat-header-cell *matHeaderCellDef> Destination </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.destination}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="country">
+      <mat-header-cell *matHeaderCellDef> Country </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.country}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="startDate">
+      <mat-header-cell *matHeaderCellDef> Start date </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.startDate}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="endDate">
+      <mat-header-cell *matHeaderCellDef> End date </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.endDate}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="tourType">
+      <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.tourType}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="capacity">
+      <mat-header-cell *matHeaderCellDef> Capacity </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.capacity}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.price}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="agency">
+      <mat-header-cell *matHeaderCellDef> Agency </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.agency}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+  </mat-table>
+</div>

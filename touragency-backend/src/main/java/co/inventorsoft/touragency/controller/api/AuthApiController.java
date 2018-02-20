@@ -31,6 +31,6 @@ public class AuthApiController {
     public ResponseEntity<User> register(@RequestBody User user) {
         return ResponseEntity.ok(authenticationService.registerUser(user.getUsername(),
                 user.getPassword(), user.getEmail(), user.isAdmin(),
-                user.getAgency()));
+                user.getAgencyStr()));
     }
 }

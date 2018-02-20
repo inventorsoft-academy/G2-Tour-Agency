@@ -1,25 +1,43 @@
 package co.inventorsoft.touragency.model;
 
+import javax.persistence.*;
 import java.util.Objects;
 
 /**
  * The {@code User} class contains information about users that will utilize the application.
  * The users are of two types. The first type users are regular users who act as customers at
- * a tour agency. They can filter a list of available tours, book a tour, cancel a booking or
+ * a tour agencyStr. They can filter a list of available tours, book a tour, cancel a booking or
  * write a review of a tour.
  * The second type of users are administrators (or moderators). They can add review a list
- * of tours their agency offers, add a new tour, cancel a tour, view tour's reviews and export
+ * of tours their agencyStr offers, add a new tour, cancel a tour, view tour's reviews and export
  * them into a text file as well as import tours from a text file.
  * The {@code User} class holds both regular users (a.k.a customers) and administrators. The
  * distinction between them is in the boolean field {@code isAdmin}.
  * */
+@Entity
+@Table(name = "users")
 public class User implements BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     private int id;
+
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
+
+    @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
+
+    @Column(name = "is_admin")
     private boolean isAdmin;
-    private String agency;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Agency agency;
+    private String agencyStr;
 
     /**
      * Default constructor without parameters. Initializes class fields with default
@@ -36,14 +54,15 @@ public class User implements BaseEntity {
      *                                 @param email user's email address
      *                                              @param isAdmin indicates if a user has administrative
      *                                                             privileges
-     *                                                             @param agency user's agency (admins only)
+     *                                                             @param agencyStr user's agencyStr (admins only)
      * */
-    public User(String username, String password, String email, boolean isAdmin, String agency) {
+    public User(String username, String password, String email, boolean isAdmin, String agencyStr) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.isAdmin = isAdmin;
-        this.agency = agency;
+        this.agency = new Agency(agencyStr);
+        this.agencyStr = agencyStr;
     }
 
     /**
@@ -61,7 +80,7 @@ public class User implements BaseEntity {
                 Objects.equals(username, user.username) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(email, user.email) &&
-                Objects.equals(agency, user.agency);
+                Objects.equals(agencyStr, user.agencyStr);
     }
 
     @Override
@@ -123,9 +142,13 @@ public class User implements BaseEntity {
     }
 
     /**
-     * @return user's agency
+     * @return user's agencyStr
      * */
-    public String getAgency() {
+    public String getAgencyStr() {
+        return agencyStr;
+    }
+
+    public Agency getAgency() {
         return agency;
     }
 }

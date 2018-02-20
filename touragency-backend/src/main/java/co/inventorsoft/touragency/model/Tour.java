@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -24,24 +25,44 @@ import java.util.Objects;
  * <strong>Identifier's setter must be invoked only at startup while scanning the list
  * of tours from a dao source.</strong>
  * */
+@Entity
+@Table(name = "tours")
 public class Tour implements BaseEntity, Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     private int id;
+
+    @Column(name = "destination", nullable = false)
     private String destination;
+
+    @Column(name = "country", nullable = false)
     private String country;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
+    @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
+    @Column(name = "end_date", nullable = false)
     private LocalDate endDate;
 
+    @Enumerated
+    @Column(name = "tour_type")
     private TourType tourType;
+
+    @Column(name = "capacity", nullable = false)
     private int capacity;
+
+    @Column(name = "price", nullable = false)
     private int price;
+
+
     private String agency;
     private boolean isActive;
 

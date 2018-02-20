@@ -59,7 +59,7 @@ public class UserFileSystemDao implements BaseDao<User> {
                         user.getPassword() + "; " +
                         user.getEmail() + "; " +
                         user.isAdmin() + "; " +
-                        user.getAgency());
+                        user.getAgencyStr());
                 fileWriter.write("\n");
             }
             fileWriter.close();
