@@ -8,11 +8,9 @@ import {SharedComponent} from './shared/shared.component';
 import {ToursListComponent} from './shared/tours-list/tours-list.component';
 import {NewTourComponent} from './shared/new-tour/new-tour.component';
 import {TourDetailsComponent} from './shared/tour-details/tour-details.component';
-import {AuthModule} from './auth/auth.module';
-import {LoginComponent} from './auth/login/login.component';
-import {RegistrationComponent} from './auth/registration/registration.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AuthComponent} from './auth/auth.component';
+import {HttpAuthService} from './common/services/http.auth.service';
+import {BookingsListComponent} from './shared/bookings-list/bookings-list.component';
 
 const routes = [
   {
@@ -20,41 +18,31 @@ const routes = [
     component: SharedComponent,
     children: [
       {
-        path: 'tours-list',
+        path: '',
+        redirectTo: 'tours',
+        pathMatch: 'full'
+      },
+      {
+        path: 'tours',
         component: ToursListComponent
       },
       {
-        path: 'new-tour',
+        path: 'new',
         component: NewTourComponent
       },
       {
         path: 'tour-details/:id',
         component: TourDetailsComponent
+      },
+      {
+        path: 'bookings',
+        component: BookingsListComponent
       }
     ]
   },
   {
-    path: 'auth',
-    component: AuthComponent,
-    children: [
-      {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full'
-      },
-      {
-        path: 'login',
-        component: LoginComponent
-      },
-      {
-        path: 'register',
-        component: RegistrationComponent
-      },
-    ]
-  },
-  {
     path: '',
-    redirectTo: 'auth',
+    redirectTo: 'app/tours',
     pathMatch: 'full'
   }
 ];
@@ -64,13 +52,12 @@ const routes = [
     AppComponent
   ],
   imports: [
-    AuthModule,
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),
     SharedModule
   ],
-  providers: [HttpService],
+  providers: [HttpService, HttpAuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

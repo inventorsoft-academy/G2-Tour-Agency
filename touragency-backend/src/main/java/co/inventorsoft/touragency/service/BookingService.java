@@ -3,7 +3,7 @@ package co.inventorsoft.touragency.service;
 import co.inventorsoft.touragency.controller.dao.files.BookingFileSystemDao;
 import co.inventorsoft.touragency.exceptions.TourNotAvailableException;
 import co.inventorsoft.touragency.exceptions.TourSoldOutException;
-import co.inventorsoft.touragency.model.BookedTour;
+import co.inventorsoft.touragency.model.Booking;
 import co.inventorsoft.touragency.model.Tour;
 import co.inventorsoft.touragency.model.User;
 import co.inventorsoft.touragency.model.validation.BookedTourFactory;
@@ -32,7 +32,7 @@ public class BookingService {
     private AuthenticationService authenticationService;
     private TourService tourService;
 
-    private List<BookedTour> bookedTours;
+    private List<Booking> bookings;
     private Map<Tour, Integer> bookingStats;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -56,7 +56,7 @@ public class BookingService {
      * */
     @PostConstruct
     private void getBookedTours() {
-        this.bookedTours = dao.getAll();
+        this.bookings = dao.getAll();
     }
 
     /**
@@ -65,7 +65,7 @@ public class BookingService {
      * */
     @PreDestroy
     private void saveAll() {
-        boolean status = dao.saveAll(bookedTours);
+        boolean status = dao.saveAll(bookings);
     }
 
     /**
@@ -75,9 +75,9 @@ public class BookingService {
      *                 @param isUser a dummy parameter
      *                               @return list of bookings made by a specific user
      * */
-    public List<BookedTour> getBookedTours(String username, boolean isUser) {
-        return bookedTours.stream()
-                .filter(bookedTour -> bookedTour.getUser().getUsername().equals(username))
+    public List<Booking> getBookedTours(String username, boolean isUser) {
+        return bookings.stream()
+                .filter(booking -> booking.getUser().getUsername().equals(username))
                 .collect(Collectors.toList());
     }
 
@@ -86,9 +86,9 @@ public class BookingService {
      * @param agency name of agency for which, bookings would be displayed
      *               @return list of all bookings for all tours offered by a specific agency
      * */
-    public List<BookedTour> getBookedTours(String agency) {
-        return bookedTours.stream()
-                .filter(bookedTour -> bookedTour.getTour().getAgency().equals(agency))
+    public List<Booking> getBookedTours(String agency) {
+        return bookings.stream()
+                .filter(booking -> booking.getTour().getAgency().equals(agency))
                 .collect(Collectors.toList());
     }
 
@@ -97,30 +97,33 @@ public class BookingService {
      * This method takes two parameters - an id of a user and an id of a tour to be booked.
      * @param userId id of a user who performs booking
      *               @param tourId id of a tour to be booked
-     *                             @return new instance of {@link BookedTour} class containing
+     *                             @return new instance of {@link Booking} class containing
      *                             data for a newly created booking
      *                             @throws TourSoldOutException if all available tickets
      *                             (places) for a tour had been sold out
      *                             @throws TourNotAvailableException if a tour was previously
      *                             cancelled by a company admin
      * */
-    public BookedTour bookTour(int userId, int tourId) throws
+    public Booking bookTour(int userId, int tourId) throws
             TourSoldOutException, TourNotAvailableException {
 
         try {
             User user = authenticationService.getUsers().get(userId - 1);
-            Tour tour = tourService.getTours(false).get(tourId - 1);
+            Tour tour = tourService.getTours(true).get(tourId - 1);
 
             if (!tour.isActive()) {
                 throw new TourNotAvailableException("Tour was cancelled!");
             }
 
-            int alreadyBooked = (int) bookedTours.stream()
-                    .filter(bookedTour -> bookedTour.getTour().getId() == tourId)
+            int alreadyBooked = (int) bookings.stream()
+                    .filter(booking -> booking.getTour().getId() == tourId)
                     .count();
 
             if (alreadyBooked < tour.getCapacity()) {
-                return new BookedTourFactory(user, tour, true).create();
+                Booking booking = new BookedTourFactory(user, tour, true).create();
+                bookings.add(booking);
+                bookings.get(bookings.size() - 1).setId(bookings.size());
+                return bookings.get(bookings.size() - 1);
             } else {
                 throw new TourSoldOutException("Tour sold out!");
             }
@@ -137,7 +140,7 @@ public class BookingService {
      *           @return true if an operation succeeded, false otherwise
      * */
     public boolean cancelBooking(int id) {
-        Optional<BookedTour> bookedTourOptional = Optional.of(bookedTours.get(id - 1));
+        Optional<Booking> bookedTourOptional = Optional.of(bookings.get(id - 1));
 
         if (!bookedTourOptional.isPresent()) {
             logger.error("Failed to find booking with id " + id);

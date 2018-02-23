@@ -14,12 +14,13 @@ export class HeaderComponent implements OnInit {
     { link: 'bookings', label: 'Bookings' },
     { link: 'reviews', label: 'Reviews' }
   ];
-  navigationSideMenu = [
-    ...this.navigation,
-    { link: 'settings', label: 'Settings' }
-  ];
+
+  username;
+  email;
 
   ngOnInit() {
+    this.username = sessionStorage.getItem('username');
+    this.email = sessionStorage.getItem('email');
   }
 
 }

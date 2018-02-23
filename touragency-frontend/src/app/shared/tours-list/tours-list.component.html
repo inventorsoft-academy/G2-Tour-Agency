@@ -6,7 +6,8 @@
     </ng-container>
 
     <ng-container matColumnDef="destination">
-      <mat-header-cell *matHeaderCellDef> Destination </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>
+        Destination </mat-header-cell>
       <mat-cell *matCellDef="let element">{{element.destination}}</mat-cell>
     </ng-container>
 
@@ -46,7 +47,8 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getTourById(row.id)"
+             class="tour-list-element"></mat-row>
 
   </mat-table>
 </div>

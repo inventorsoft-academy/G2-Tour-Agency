@@ -2,15 +2,129 @@
   <mat-card>
     <mat-card-title>Tour info</mat-card-title>
     <mat-card-content>
-      <span><strong>ID: </strong>{{tour?.id}}</span>
-      <span><strong>Destination: </strong>{{tour?.destination}}</span>
-      <span><strong>Country: </strong>{{tour?.country}}</span>
-      <span><strong>Start date: </strong>{{tour?.startDate}}</span>
-      <span><strong>End date: </strong>{{tour?.endDate}}</span>
-      <span><strong>Tour type: </strong>{{tour?.tourType}}</span>
-      <span><strong>Capacity: </strong>{{tour?.capacity}}</span>
-      <span><strong>Price: </strong>{{tour?.price}}</span>
-      <span><strong>Agency: </strong>{{tour?.agency}}</span>
+      <!--<span><strong>ID: </strong>{{tour?.id}}</span><br>
+      <span><strong>Destination: </strong>{{tour?.destination}}</span><br>
+      <span><strong>Country: </strong>{{tour?.country}}</span><br>
+      <span><strong>Start date: </strong>{{tour?.startDate}}</span><br>
+      <span><strong>End date: </strong>{{tour?.endDate}}</span><br>
+      <span><strong>Tour type: </strong>{{tour?.tourType}}</span><br>
+      <span><strong>Capacity: </strong>{{tour?.capacity}}</span><br>
+      <span><strong>Price: </strong>{{tour?.price}}</span><br>
+      <span><strong>Agency: </strong>{{tour?.agency}}</span><br>-->
+
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Destination</mat-panel-title>
+            <mat-panel-description>{{tour?.destination}}</mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>This city (or village) is tour's primary place of stay</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Country</mat-panel-title>
+            <mat-panel-description>{{tour?.country}}</mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>A country of tour's destination</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Start date</mat-panel-title>
+            <mat-panel-description>{{tour?.startDate}}</mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>A date on which tour will start. This period starts from hotel check-in.
+            Plane (bus) departure might be prior to this date up to 48 hours. </p>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>End date</mat-panel-title>
+            <mat-panel-description>{{tour?.endDate}}</mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>A date on which tour will end. This is the date of hotel check-out.
+            You would depart from the hotel's location in 12 hours.</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Tour type</mat-panel-title>
+            <mat-panel-description>{{tour?.tourType}}</mat-panel-description>
+          </mat-expansion-panel-header>
+          <mat-action-row>
+            <mat-select placeholder="Tour type" required id="tour-type-select"
+                        [(ngModel)]="typeSelectedValue">
+              <mat-option>---</mat-option>
+              <mat-option *ngFor="let type of tourTypes" [value]="type">{{type}}</mat-option>
+            </mat-select>
+            <button mat-button (click)="updateTourType()">UPDATE TYPE</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Available places</mat-panel-title>
+            <mat-panel-description>{{tour?.capacity}}</mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>Total number of available places for a tour. This number does not count
+          tours that were already booked.</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Price</mat-panel-title>
+            <mat-panel-description>{{tour?.price}}</mat-panel-description>
+          </mat-expansion-panel-header>
+          <mat-action-row>
+            <label for="tour-price">Enter new price of a tour</label>
+            <input matInput type="number" required value="{{tour?.price}}"
+                id="tour-price" [ngModel]="newPrice" >
+            <br>
+            <button mat-button class="tour-update-numeric-data-button"
+                    (click)="updateTourPrice()">UPDATE</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Agency</mat-panel-title>
+            <mat-panel-description>{{tour?.agency}}</mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>An agency that is the operator of the tour</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Status</mat-panel-title>
+            <mat-panel-description id="tour-status">{{status}}</mat-panel-description>
+          </mat-expansion-panel-header>
+          <mat-action-row>
+            <span>You can cancel a tour if it is still available by clicking on this button</span>
+            <button mat-button (click)="cancelTour()">CANCEL</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+
     </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button (click)="bookTour()">BOOK</button>
+    </mat-card-actions>
   </mat-card>
 </div>

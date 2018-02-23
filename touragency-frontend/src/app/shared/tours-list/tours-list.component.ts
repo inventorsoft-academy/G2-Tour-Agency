@@ -5,6 +5,7 @@ import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
 import {Tour} from '../../common/models/tour';
 import {Router} from '@angular/router';
+import {NotificationService} from '../../common/services/notification.service';
 
 @Component({
   selector: 'app-tours-list',
@@ -14,29 +15,31 @@ import {Router} from '@angular/router';
 export class ToursListComponent implements OnInit, OnDestroy {
 
   toursList;
-  subscriptions: Subscription[];
+  subscriptions: Subscription[] = [];
 
   displayedColumns = ['id', 'destination', 'country', 'startDate', 'endDate',
-                      'tourType', 'capacity', 'price', 'agency'];
+    'tourType', 'capacity', 'price', 'agency'];
   dataSource = new TourDataSource(this.http);
 
-  constructor(private http: HttpService, private router: Router) {
+  constructor(private http: HttpService, private router: Router,
+              private notificationService: NotificationService) {
   }
 
   ngOnInit() {
-    // this.getTours();
+    this.getTours();
   }
 
   getTours() {
     const getToursSubscription = this.http.getTours().subscribe(
       res => {
         this.toursList = res;
+        this.notificationService.notify('Successfully loaded the list of tours');
       });
     this.subscriptions.push(getToursSubscription);
   }
 
   getTourById(id) {
-    this.router.navigate([`app/tour-detail/${id}`]);
+    this.router.navigate([`app/tour-details/${id}`]);
   }
 
   ngOnDestroy(): void {

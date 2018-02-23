@@ -49,7 +49,7 @@ public class ToursApiController {
      * */
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Tour>> getTours() {
-        return ResponseEntity.ok(tourService.getTours(true));
+        return ResponseEntity.ok(tourService.getTours(false));
     }
 
     /**
@@ -63,11 +63,19 @@ public class ToursApiController {
         return ResponseEntity.ok(tourService.getTour(id));
     }
 
+    /**
+     * Returns all tours with a specified tour type. The desired tour type is specified
+     * as a parameter of the GET request
+     * */
     @GetMapping(params = "type")
     public ResponseEntity<List<Tour>> getToursByType(@RequestParam String type) {
         return ResponseEntity.ok(tourService.getTours(TourType.valueOf(type)));
     }
 
+    /**
+     * Returns all tours that start on a date that is in a range of specified
+     * in parameters dates.
+     * */
     @GetMapping(value = "range")
     public ResponseEntity<List<Tour>> getToursFromRange(@RequestParam String fromDate,
                                                         @RequestParam String toDate) {
@@ -76,6 +84,10 @@ public class ToursApiController {
                 LocalDate.parse(toDate, DateValidator.formatter)));
     }
 
+    /**
+     * Allows to cancel a tour with a specified id
+     * */
+    @SuppressWarnings("unchecked")
     @PutMapping("/cancel/{tourId:\\d+}")
     public ResponseEntity cancelTour(@PathVariable int tourId) {
         return tourService.cancelTour(tourId) ?
@@ -83,6 +95,10 @@ public class ToursApiController {
                 new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Performs an update of a tour type with an id provided as a path variable
+     * and assigns a new value for tour type passed as a parameter
+     * */
     @PutMapping("/update/type/{tourId:\\d+}")
     public ResponseEntity updateTourType(@PathVariable int tourId,
                                          @RequestParam String type) {
@@ -91,6 +107,10 @@ public class ToursApiController {
                 new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Performs an update of a tour's price. A tour to be updated is defined by its ID and
+     * the new value is passed as a request parameter
+     * */
     @PutMapping("/update/price/{tourId:\\d+}")
     public ResponseEntity updateTourPrice(@PathVariable int tourId,
                                           @RequestParam int price) {
@@ -106,14 +126,21 @@ public class ToursApiController {
                 .body(createdTour);
     }
 
+    /**
+     * Creates a new instance of a tour using values provided in a JSON body of the
+     * POST request.
+     * */
     @PostMapping(value = "/new", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Tour> createTour(@RequestBody Tour tour) {
         Tour newTour = new TourFactory(tour.getDestination(),
                 tour.getCountry(),
                 tour.getStartDate().toString(),
                 tour.getEndDate().toString(),
-                tour.getTourType().toString(), tour.getCapacity(), tour.getPrice(),
-                tour.getAgency(), true).create();
+                tour.getTourType().toString(),
+                tour.getCapacity(),
+                tour.getPrice(),
+                tour.getAgency(), true)
+                .create();
         if (newTour != null) {
             tourService.createTour(newTour);
             return ResponseEntity.status(HttpStatus.CREATED).build();

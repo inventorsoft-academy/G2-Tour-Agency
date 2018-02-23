@@ -11,3 +11,7 @@
   overflow: auto;
   max-height: 500px;
 }
+
+.tour-list-element:hover {
+  cursor: pointer;
+}

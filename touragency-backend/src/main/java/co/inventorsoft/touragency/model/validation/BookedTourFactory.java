@@ -1,10 +1,10 @@
 package co.inventorsoft.touragency.model.validation;
 
-import co.inventorsoft.touragency.model.BookedTour;
+import co.inventorsoft.touragency.model.Booking;
 import co.inventorsoft.touragency.model.Tour;
 import co.inventorsoft.touragency.model.User;
 
-public class BookedTourFactory implements BaseFactory<BookedTour> {
+public class BookedTourFactory implements BaseFactory<Booking> {
 
     private User user;
     private Tour tour;
@@ -17,7 +17,7 @@ public class BookedTourFactory implements BaseFactory<BookedTour> {
     }
 
     @Override
-    public BookedTour create() {
-        return new BookedTour(user, tour, isActive);
+    public Booking create() {
+        return new Booking(user, tour, isActive);
     }
 }

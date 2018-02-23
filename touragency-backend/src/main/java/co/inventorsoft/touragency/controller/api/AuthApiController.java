@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
+/**
+ * Class {@code AuthApiController} provides implememtation of the applications
+ * Authentication API
+ * */
 @CrossOrigin(origins = "*", methods = {GET, POST, PUT, DELETE, OPTIONS})
 @RestController
 @RequestMapping(value = "/auth")
@@ -31,6 +35,6 @@ public class AuthApiController {
     public ResponseEntity<User> register(@RequestBody User user) {
         return ResponseEntity.ok(authenticationService.registerUser(user.getUsername(),
                 user.getPassword(), user.getEmail(), user.isAdmin(),
-                user.getAgencyStr()));
+                user.getAgency()));
     }
 }

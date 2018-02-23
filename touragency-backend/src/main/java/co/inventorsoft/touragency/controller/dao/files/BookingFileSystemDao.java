@@ -1,34 +1,32 @@
 package co.inventorsoft.touragency.controller.dao.files;
 
 import co.inventorsoft.touragency.controller.dao.BaseDao;
-import co.inventorsoft.touragency.model.BookedTour;
+import co.inventorsoft.touragency.model.Booking;
 import co.inventorsoft.touragency.model.Tour;
 import co.inventorsoft.touragency.model.User;
 import co.inventorsoft.touragency.model.validation.BookedTourFactory;
 import co.inventorsoft.touragency.service.AuthenticationService;
 import co.inventorsoft.touragency.service.TourService;
-import co.inventorsoft.touragency.util.ConsoleHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class BookingFileSystemDao implements BaseDao<BookedTour> {
+public class BookingFileSystemDao implements BaseDao<Booking> {
 
-    private final String PATH = "D:\\Progs\\JAVA\\2018\\1\\TourAgency\\src\\main\\" +
-            "resources\\dao\\bookedtours.mta";
+    private final String PATH = "D:\\Progs\\JAVA\\2018\\ACADEMY\\G2-Tour-Agency\\" +
+            "touragency-backend\\src\\main\\resources\\data\\bookings.mta";
 
     private List<User> users;
     private List<Tour> tours;
-
     private AuthenticationService authenticationService;
     private TourService tourService;
+    private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     public BookingFileSystemDao(AuthenticationService authenticationService, TourService tourService) {
         this.authenticationService = authenticationService;
@@ -42,9 +40,9 @@ public class BookingFileSystemDao implements BaseDao<BookedTour> {
     }
 
     @Override
-    public List<BookedTour> getAll() {
+    public List<Booking> getAll() {
         File file = new File(PATH);
-        List<BookedTour> bookedTours = new ArrayList<>();
+        List<Booking> bookings = new ArrayList<>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
@@ -55,18 +53,34 @@ public class BookingFileSystemDao implements BaseDao<BookedTour> {
 
                 User user = users.get(userId - 1);
                 Tour tour = tours.get(tourId - 1);
-                bookedTours.add(new BookedTourFactory(user, tour, isActive).create());
+                bookings.add(new BookedTourFactory(user, tour, isActive).create());
             }
-            assignIdentifiers(bookedTours);
-            return bookedTours;
+            assignIdentifiers(bookings);
+            logger.info("Successfully retrieved the list of bookings from a text file");
+            return bookings;
         } catch (IOException e) {
-            ConsoleHelper.write("Exception!");
+            logger.error("Something went wrong while retrieving the list of bookings from " +
+                    "a text file");
             return null;
         }
     }
 
     @Override
-    public boolean saveAll(List<BookedTour> data) {
+    public boolean saveAll(List<Booking> data) {
+        File file = new File(PATH);
+        try (FileWriter fileWriter = new FileWriter(file, false)) {
+            for (Booking booking : data) {
+                fileWriter.write(booking.getUser().getId() + "; " +
+                        booking.getTour().getId() + "; " +
+                        booking.getStatus());
+                fileWriter.write("\n");
+            }
+            fileWriter.close();
+            logger.info("Successfully saved bookings data to text file");
+            return true;
+        } catch (IOException e) {
+            logger.error("Failed to save bookings data to text file." + e.toString());
+        }
         return false;
     }
 }

@@ -4,10 +4,14 @@ import co.inventorsoft.touragency.model.Tour;
 import co.inventorsoft.touragency.model.TourType;
 import co.inventorsoft.touragency.util.validation.BasicValidator;
 import co.inventorsoft.touragency.util.validation.DateValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 
 public class TourFactory implements BaseFactory<Tour> {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     private String destination;
     private String country;
@@ -35,25 +39,30 @@ public class TourFactory implements BaseFactory<Tour> {
 
     @Override
     public Tour create() {
-        boolean isDestinationValid = BasicValidator.validateText(destination);
-        boolean isCountryValid = BasicValidator.validateText(country);
-        boolean isStartDateValid = DateValidator.validateDateString(startDateStr);
-        boolean isEndDateValid = DateValidator.validateDateString(endDateStr);
-        boolean isAgencyValid = BasicValidator.validateAgency(agency);
-        TourType tourType = TourType.valueOf(tourTypeStr);
+        try {
+            boolean isDestinationValid = BasicValidator.validateText(destination);
+            boolean isCountryValid = BasicValidator.validateText(country);
+            boolean isStartDateValid = DateValidator.validateDateString(startDateStr);
+            boolean isEndDateValid = DateValidator.validateDateString(endDateStr);
+            boolean isAgencyValid = BasicValidator.validateAgency(agency);
+            TourType tourType = TourType.valueOf(tourTypeStr);
 
-        if (isStartDateValid && isEndDateValid) {
-            LocalDate startDate = LocalDate.parse(startDateStr, DateValidator.formatter);
-            LocalDate endDate = LocalDate.parse(endDateStr, DateValidator.formatter);
+            if (isStartDateValid && isEndDateValid) {
+                LocalDate startDate = LocalDate.parse(startDateStr, DateValidator.formatter);
+                LocalDate endDate = LocalDate.parse(endDateStr, DateValidator.formatter);
 
-            boolean isDateRangeValid = DateValidator.validateDateRange(startDate, endDate);
+                boolean isDateRangeValid = DateValidator.validateDateRange(startDate, endDate);
 
-            if (isDestinationValid && isCountryValid &&
-                    isDateRangeValid &&  isAgencyValid) {
-                return new Tour(
-                        destination, country, startDate, endDate, tourType,
-                        capacity, price, agency, isActive);
+                if (isDestinationValid && isCountryValid &&
+                        isDateRangeValid && isAgencyValid) {
+                    return new Tour(
+                            destination, country, startDate, endDate, tourType,
+                            capacity, price, agency, isActive);
+                }
             }
+        } catch (RuntimeException e) {
+            logger.error("Failed to create a tour with provided parameters. " +
+                    e.getCause() + ". " + e.getMessage());
         }
         return null;
     }

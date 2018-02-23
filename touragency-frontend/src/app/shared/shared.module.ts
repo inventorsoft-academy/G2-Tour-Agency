@@ -4,11 +4,19 @@ import {HeaderComponent} from './header/header.component';
 import {
   MatButtonModule,
   MatCardModule,
+  MatDatepickerModule,
+  MatExpansionModule,
+  MatFormFieldModule,
   MatIconModule,
+  MatInputModule,
   MatListModule,
   MatMenuModule,
+  MatNativeDateModule,
+  MatSelectModule,
   MatSidenavModule,
+  MatSlideToggleModule,
   MatSnackBarModule,
+  MatSortModule,
   MatTableModule,
   MatToolbarModule
 } from '@angular/material';
@@ -18,20 +26,35 @@ import {ToursListComponent} from './tours-list/tours-list.component';
 import {NewTourComponent} from './new-tour/new-tour.component';
 import {HttpClientModule} from '@angular/common/http';
 import {TourDetailsComponent} from './tour-details/tour-details.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatMomentDateModule} from '@angular/material-moment-adapter';
+import {NotificationService} from '../common/services/notification.service';
+import {BookingsListComponent} from './bookings-list/bookings-list.component';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     HttpClientModule,
     MatButtonModule,
     MatCardModule,
+    MatDatepickerModule,
+    MatExpansionModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
     MatListModule,
     MatMenuModule,
+    MatMomentDateModule,
+    MatNativeDateModule,
+    MatSelectModule,
     MatSidenavModule,
+    MatSlideToggleModule,
+    MatSortModule,
     MatSnackBarModule,
     MatTableModule,
     MatToolbarModule,
+    ReactiveFormsModule,
     RouterModule
   ],
   declarations: [
@@ -39,10 +62,12 @@ import {TourDetailsComponent} from './tour-details/tour-details.component';
     SharedComponent,
     ToursListComponent,
     NewTourComponent,
-    TourDetailsComponent
+    TourDetailsComponent,
+    BookingsListComponent
   ],
   exports: [
     HeaderComponent
-  ]
+  ],
+  providers: [NotificationService]
 })
 export class SharedModule { }

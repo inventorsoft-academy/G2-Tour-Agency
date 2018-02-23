@@ -8,3 +8,11 @@
   justify-content: space-around;
   text-transform: uppercase;
 }
+
+#user-data-panel {
+  float: right;
+}
+
+#app-title:hover {
+  cursor: pointer;
+}

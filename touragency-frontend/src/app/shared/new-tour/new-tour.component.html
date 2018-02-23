@@ -1,0 +1,56 @@
+<div class="container">
+  <mat-card>
+    <mat-card-title>New tour</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="newTourForm">
+
+        <mat-form-field>
+          <input matInput type="text" placeholder="Destination" formControlName="destination" required>
+        </mat-form-field><br>
+
+        <mat-form-field>
+          <input matInput type="text" placeholder="Country" formControlName="country" required>
+        </mat-form-field><br>
+
+       <!-- <mat-form-field>
+          <input matInput [matDatepicker]="startDatePicker" placeholder="Start date">
+          <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker [touchUi]="true"></mat-datepicker>-->
+          <span>Start date </span>
+          <input type="date" formControlName="startDate"><br>
+       <!-- </mat-form-field><br>-->
+
+        <!--<mat-form-field>
+          <input matInput [matDatepicker]="endDatePicker" placeholder="End date">
+          <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #endDatePicker [touchUi]="true"></mat-datepicker>-->
+          <span>End date   </span>
+          <input type="date" formControlName="endDate"><br><br>
+        <!--</mat-form-field><br>-->
+
+        <mat-form-field>
+          <mat-select placeholder="Tour type" formControlName="tourType" required>
+            <mat-option>---</mat-option>
+            <mat-option *ngFor="let type of tourTypes" [value]="type">{{type}}</mat-option>
+          </mat-select>
+        </mat-form-field><br>
+
+        <mat-form-field>
+          <input matInput type="number" placeholder="Total available places" formControlName="capacity" required>
+        </mat-form-field><br>
+
+        <mat-form-field>
+          <input matInput type="number" placeholder="Price" formControlName="price" required>
+        </mat-form-field><br>
+
+        <mat-form-field>
+          <input matInput placeholder="Agency" formControlName="agency" required>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-flat-button (click)="createTour()">CREATE TOUR</button>
+      <button mat-raised-button (click)="resetForm()">RESET</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -15,8 +15,8 @@ import java.util.List;
 @Component
 public class UserFileSystemDao implements BaseDao<User> {
 
-    private final String PATH = "D:\\Progs\\JAVA\\2018\\ACADEMY\\TourAgency\\src\\main\\" +
-            "resources\\data\\users.mta";
+    private final String PATH = "D:\\Progs\\JAVA\\2018\\ACADEMY\\G2-Tour-Agency\\" +
+            "touragency-backend\\src\\main\\resources\\data\\users.mta";
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
@@ -59,7 +59,7 @@ public class UserFileSystemDao implements BaseDao<User> {
                         user.getPassword() + "; " +
                         user.getEmail() + "; " +
                         user.isAdmin() + "; " +
-                        user.getAgencyStr());
+                        user.getAgency());
                 fileWriter.write("\n");
             }
             fileWriter.close();

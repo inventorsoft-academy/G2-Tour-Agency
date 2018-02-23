@@ -1,6 +1,6 @@
 package co.inventorsoft.touragency.model;
 
-import javax.persistence.*;
+//import javax.persistence.*;
 import java.util.Objects;
 
 /**
@@ -14,30 +14,30 @@ import java.util.Objects;
  * The {@code User} class holds both regular users (a.k.a customers) and administrators. The
  * distinction between them is in the boolean field {@code isAdmin}.
  * */
-@Entity
-@Table(name = "users")
+//@Entity
+//@Table(name = "users")
 public class User implements BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id", unique = true, nullable = false)
     private int id;
 
-    @Column(name = "username", unique = true, nullable = false)
+//    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
-    @Column(name = "password", nullable = false)
+//    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "email", unique = true, nullable = false)
+//    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "is_admin")
+//    @Column(name = "is_admin")
     private boolean isAdmin;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Agency agency;
-    private String agencyStr;
+//    @ManyToOne(fetch = FetchType.LAZY)
+    //private Agency agency;
+    private String agency;
 
     /**
      * Default constructor without parameters. Initializes class fields with default
@@ -61,8 +61,8 @@ public class User implements BaseEntity {
         this.password = password;
         this.email = email;
         this.isAdmin = isAdmin;
-        this.agency = new Agency(agencyStr);
-        this.agencyStr = agencyStr;
+        this.agency =  agencyStr; //new Agency(agencyStr);
+        //this.agencyStr = agencyStr;
     }
 
     /**
@@ -80,7 +80,7 @@ public class User implements BaseEntity {
                 Objects.equals(username, user.username) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(email, user.email) &&
-                Objects.equals(agencyStr, user.agencyStr);
+                Objects.equals(agency, user.agency);
     }
 
     @Override
@@ -140,15 +140,15 @@ public class User implements BaseEntity {
     public boolean isAdmin() {
         return isAdmin;
     }
-
+/*
     /**
      * @return user's agencyStr
-     * */
-    public String getAgencyStr() {
+     * *//*
+    //public String getAgencyStr() {
         return agencyStr;
-    }
+    }*/
 
-    public Agency getAgency() {
+    public String getAgency() {
         return agency;
     }
 }

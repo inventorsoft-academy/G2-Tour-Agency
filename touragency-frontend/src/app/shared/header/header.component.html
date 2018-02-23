@@ -1,4 +1,27 @@
-<mat-toolbar>Tour Agency
-  <button mat-button [routerLink]="['app/tours-list']">Tours list</button>
-  <button mat-button [routerLink]="['app/new-tour']">New tour</button>
+<mat-toolbar>
+  <h1 [routerLink]="['']" id="app-title">Tour Agency</h1>
+  <!--<button mat-button [routerLink]="['tours-list']">Tours list</button>
+  <button mat-button [routerLink]="['new-tour']">New tour</button>
+  <button mat-button [routerLink]="['tours-list']">Hot tours</button>-->
+
+  <button mat-button [matMenuTriggerFor]="toursMenu">Tours</button>
+  <mat-menu #toursMenu="matMenu">
+    <button mat-menu-item [routerLink]="['tours']">Available tours</button>
+    <button mat-menu-item [routerLink]="['new']">New tour</button>
+  </mat-menu>
+
+  <button mat-button [matMenuTriggerFor]="bookingsMenu">Bookings</button>
+  <mat-menu #bookingsMenu="matMenu">
+    <button mat-menu-item [routerLink]="['bookings']">Booked tours</button>
+  </mat-menu>
+
+  <!--<button mat-button [matMenuTriggerFor]="userData" [ngModel]="username">{{username}}</button>
+  <mat-menu #userData="matMenu">
+    <span [ngModel]="email">{{email}}</span>
+  </mat-menu>-->
+
+  <mat-expansion-panel id="user-data-panel">
+    <mat-expansion-panel-header [ngModel]="username">{{username}}</mat-expansion-panel-header>
+    <mat-panel-description [ngModel]="email">{{email}}</mat-panel-description>
+  </mat-expansion-panel>
 </mat-toolbar>

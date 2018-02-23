@@ -1,6 +1,6 @@
 package co.inventorsoft.touragency.model;
 
-import javax.persistence.*;
+//import javax.persistence.*;
 
 /**
  * Class {@code TourReview} represents a single review left by a user for a tour.
@@ -11,22 +11,22 @@ import javax.persistence.*;
  *     <li>Review - a String containing the actual content of a review</li>
  * </ul>
  * */
-@Entity
-@Table(name = "reviews")
+//@Entity
+//@Table(name = "reviews")
 public class TourReview implements BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id", unique = true, nullable = false)
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
     private Tour tour;
 
-    @Column(name = "review", nullable = false)
+//    @Column(name = "review", nullable = false)
     private String review;
 
     public TourReview(User user, Tour tour, String review) {

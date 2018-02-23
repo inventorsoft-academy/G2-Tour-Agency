@@ -3,7 +3,6 @@ package co.inventorsoft.touragency.controller.dao.files;
 import co.inventorsoft.touragency.controller.dao.BaseDao;
 import co.inventorsoft.touragency.model.Tour;
 import co.inventorsoft.touragency.model.validation.TourFactory;
-import co.inventorsoft.touragency.util.ConsoleHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -16,8 +15,8 @@ import java.util.List;
 @Component
 public class TourFileSystemDao implements BaseDao<Tour> {
 
-    private final String PATH = "D:\\Progs\\JAVA\\2018\\ACADEMY\\TourAgency\\src\\main\\" +
-            "resources\\data\\tours.mta";
+    private final String PATH = "D:\\Progs\\JAVA\\2018\\ACADEMY\\G2-Tour-Agency" +
+            "\\touragency-backend\\src\\main\\resources\\data\\tours.mta";
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
@@ -47,6 +46,7 @@ public class TourFileSystemDao implements BaseDao<Tour> {
                 }
             }
             assignIdentifiers(tours);
+            bufferedReader.close();
             return tours;
         } catch (IOException | NullPointerException e) {
             logger.error("Failed to retrieve a list of tours from text file!" +
@@ -66,12 +66,6 @@ public class TourFileSystemDao implements BaseDao<Tour> {
                                 tour.getCountry() + "; " +
                                 tour.getStartDate().toString() + "; " +
                                 tour.getEndDate().toString() + "; " +
-                               /* String.format("%02d", tour.getStartDate().getDayOfMonth()) + "/" +*/
-                               /* String.format("%02d", tour.getStartDate().getMonthValue()) + "/" +*/
-                               /* tour.getStartDate().getYear() + "; " +*/
-                               /* String.format("%02d", tour.getEndDate().getDayOfMonth()) + "/" +*/
-                               /* String.format("%02d", tour.getEndDate().getMonthValue()) + "/" +*/
-                               /* tour.getEndDate().getYear() + "; " +*/
                                 tour.getTourType().toString() + "; " +
                                 tour.getCapacity() + "; " +
                                 tour.getPrice() + "; " +
@@ -82,7 +76,7 @@ public class TourFileSystemDao implements BaseDao<Tour> {
             fileWriter.close();
             return true;
         } catch (IOException e) {
-            ConsoleHelper.write("Exception!");
+            logger.error("Something went wrong while writing tours data into text file");
         }
 
         return false;

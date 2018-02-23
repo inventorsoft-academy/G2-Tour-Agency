@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * */
 public class BasicValidator {
     private static final Pattern generalTextPattern = Pattern.compile(
-            "^[a-zA-Z,\\-.]{2,}$");
+            "^[a-zA-Z,\\-. ]{2,}$");
     private static final Pattern credentialPattern = Pattern.compile(
             "^[a-zA-Z0-9._]{3,}$");
     private static final Pattern emailPattern = Pattern.compile(
