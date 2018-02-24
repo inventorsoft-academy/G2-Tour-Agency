@@ -1,0 +1,4 @@
+user1; password; user1@ukr.net; false; CUSTOMER
+admin1; admpassword; admin@joinup.com; true; Join Up
+admin2; adminrnk; admin@rnk.com; true; Roga & Kopyta
+user2; user2; user2@gmail.com; false; CUSTOMER

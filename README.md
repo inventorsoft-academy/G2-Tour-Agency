@@ -1,5 +1,5 @@
 # G2-Tour-Agency
-You need to develop Command Line Application to emulate simple tour agency
+You need to develop Command Line Application to emulate simple tour agencyStr
 
 # Brief description
 Application is divided into two modules: tourist and tour agent.
@@ -13,7 +13,7 @@ Tourist module requirenments:
   7) Cancel booking;
   8) Write review for tour;
   
-Tour agency requirenments:
+Tour agencyStr requirenments:
   1) Registration;
   2) Login;
   3) View company tours;

@@ -1,0 +1,6 @@
+.bookings-list {
+  display: flex;
+  flex-direction: column;
+  position: center;
+  margin: 2% 5% 2% 5%;
+}

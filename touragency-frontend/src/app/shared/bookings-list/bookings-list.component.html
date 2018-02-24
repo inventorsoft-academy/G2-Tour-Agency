@@ -1,0 +1,48 @@
+<div class="example-container mat-elevation-z0 bookings-list">
+  <mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="bookingId">
+      <mat-header-cell *matHeaderCellDef> Booking ID </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="destination">
+      <mat-header-cell *matHeaderCellDef> Destination </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.tour.destination}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="country">
+      <mat-header-cell *matHeaderCellDef> Country </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.tour.country}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="startDate">
+      <mat-header-cell *matHeaderCellDef> Start date </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.tour.startDate}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="endDate">
+      <mat-header-cell *matHeaderCellDef> End date </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.tour.endDate}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.tour.price}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="agency">
+      <mat-header-cell *matHeaderCellDef> Agency </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.tour.agency}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.status ? 'Active' : 'Cancelled'}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"
+             class="tour-list-element"></mat-row>
+
+  </mat-table>
+</div>

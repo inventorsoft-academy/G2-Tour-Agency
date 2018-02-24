@@ -1,0 +1,18 @@
+.toolbar {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.menu-item {
+  justify-content: space-around;
+  text-transform: uppercase;
+}
+
+#user-data-panel {
+  float: right;
+}
+
+#app-title:hover {
+  cursor: pointer;
+}
